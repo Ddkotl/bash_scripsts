@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#git clone https://github.com/Ddkotl/bash_scripsts.git
+#cd bash_scripsts
+#chmod +x server_settings.sh
+#./server_settings.sh
+
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
 
