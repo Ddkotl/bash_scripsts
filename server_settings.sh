@@ -28,6 +28,16 @@ nvm install --lts
 npm install -g pnpm@latest
 npm install -g bun
 
+# Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
+KEY_PATH="${HOME}/.ssh/id_rsa"
 
+# Генерация SSH ключей без пароля
+ssh-keygen -t rsa -b 4096 -f "$KEY_PATH" -N ""
 
+# Убедитесь, что директория ~/.ssh существует
+mkdir -p ~/.ssh
+
+#Вывод в консоль
+echo "Public ssh key!"
+cat "${KEY_PATH}.pub"
 echo "Server settings completed!"
