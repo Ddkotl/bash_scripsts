@@ -37,6 +37,11 @@ ssh-keygen -t rsa -b 4096 -f "$KEY_PATH" -N ""
 # Убедитесь, что директория ~/.ssh существует
 mkdir -p ~/.ssh
 
+#Установка докера
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo apt-get install docker-compose-plugin
+
 #Вывод в консоль
 echo "Public ssh key!"
 echo ""
