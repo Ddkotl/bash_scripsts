@@ -39,5 +39,7 @@ mkdir -p ~/.ssh
 
 #Вывод в консоль
 echo "Public ssh key!"
+echo ""
 cat "${KEY_PATH}.pub"
+echo ""
 echo "Server settings completed!"
