@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
