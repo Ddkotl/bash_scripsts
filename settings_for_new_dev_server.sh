@@ -41,6 +41,7 @@ sudo sh get-docker.sh
 sudo apt-get install docker-compose-plugin
 
 #Скачивание и распаковка проекта
+cd ~
 mkdir www
 cd www
 git clone https://github.com/Ddkotl/tech.git
