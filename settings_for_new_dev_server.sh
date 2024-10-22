@@ -11,9 +11,8 @@ git config --global user.email "dd5892631@gmail.com"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 source ~/.bashrc
 
-# Перезагрузка текущей оболочки для применения NVM
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Это загружает nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # Установка последней версии LTS Node.js через NVM
 nvm install --lts
@@ -32,7 +31,7 @@ ssh-keygen -t rsa -b 4096 -f "$KEY_PATH" -N ""
 #Установка докера
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
-sudo apt-get install docker-compose-plugin
+sudo apt-get install docker-compose-plugin -y
 
 #Скачивание и распаковка проекта
 cd ~
@@ -43,3 +42,5 @@ cd tech
 cp .env.example .env
 bun i
 docker compose up -d
+
+shutdown -r now
