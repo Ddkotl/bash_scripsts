@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+
+#git clone https://github.com/Ddkotl/bash_scripsts.git
+#cd bash_scripsts
+#chmod +x settings_for_new_dev_server.sh.sh
+#./settings_for_new_dev_server.sh.sh
 
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
