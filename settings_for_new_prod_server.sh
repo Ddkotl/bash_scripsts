@@ -12,7 +12,7 @@ GIT_NAME="dd"
 GIT_EMAIL="dd5892631@gmail.com"
 GIT_CLON_DIR="https://github.com/Ddkotl/tech.git"
 GIT_DIR_NAME="tech"
-WORK_DIR="~/www"
+WORK_DIR="www"
 
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
