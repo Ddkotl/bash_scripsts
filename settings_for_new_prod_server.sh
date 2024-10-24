@@ -62,3 +62,25 @@ sudo ufw allow ssh
 sudo ufw allow http
 sudo ufw allow https
 sudo ufw enable
+
+#Устанавливаем и настраиваем сервер
+sudo apt install nginx
+sudo systemctl enable nginx
+echo server {
+  server_name "$APP_DOMEN";
+
+  location / {
+    include proxy_params;
+    
+    proxy_pass http://127.0.0.1:3000;
+  }
+
+  listen 80;
+} >> /etc/nginx/sites-available/"$APP_DOMEN".conf
+sudo ln -s /etc/nginx/sites-available/"$APP_DOMEN".conf /etc/nginx/sites-enabled/
+sudo nginx -s reload
+
+#Настройка ssh
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d tech24view.ru
+certbot renew --dry-run 
