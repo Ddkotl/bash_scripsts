@@ -51,6 +51,7 @@ git clone "$GIT_CLON_DIR"
 cd "$GIT_DIR_NAME"
 cp .env.example .env
 bun i
+npx prisma migrate deploy
 bun run build
 
 # Запуск фоновых процессов
