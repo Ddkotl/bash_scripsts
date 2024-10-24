@@ -8,21 +8,25 @@
 # Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
 KEY_PATH="${HOME}/.ssh/id_rsa"
 APP_DOMEN="test123.ru"
+GIT_NAME="dd"
+GIT_EMAIL="dd5892631@gmail.com"
+GIT_CLON_DIR="https://github.com/Ddkotl/tech.git"
+GIT_DIR_NAME="tech"
+WORK_DIR="~/www"
 
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
 
 # Настройка Git
-git config --global user.name "dd"
-git config --global user.email "dd5892631@gmail.com"
+git config --global user.name "$GIT_NAME"
+git config --global user.email "$GIT_EMAIL"
 
 # Установка NVM (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-source ~/.bashrc
 
-# Перезагрузка текущей оболочки для применения NVM
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Это загружает nvm
+# Применение NVM в текущем скрипте (без необходимости source ~/.bashrc)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # Установка последней версии LTS Node.js через NVM
 nvm install --lts
@@ -35,52 +39,55 @@ npm install pm2 -g
 # Генерация SSH ключей без пароля
 ssh-keygen -t rsa -b 4096 -f "$KEY_PATH" -N ""
 
-#Установка докера
+# Установка Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo apt-get install docker-compose-plugin -y
 
-#Скачивание и распаковка проекта
-cd ~
-mkdir www
-cd www
-git clone https://github.com/Ddkotl/tech.git
-cd tech
+# Скачивание и распаковка проекта
+mkdir -p "$WORK_DIR"
+cd "$WORK_DIR"
+git clone "$GIT_CLON_DIR"
+cd "$GIT_DIR_NAME"
 cp .env.example .env
 bun i
 bun run build
 
-#Запускаем фоновые процессы
+# Запуск фоновых процессов
 docker compose up -d
-npx pm2 start npm --name next -- bun run start
+npx pm2 start npm --name "$GIT_DIR_NAME" -- bun run start
 npx pm2 startup
 
-#Запускаем фаервол
-sudo apt-get install ufw
-sudo ufw status verbose
+# Настройка Firewall (UFW)
+sudo apt-get install ufw -y
 sudo ufw allow ssh
 sudo ufw allow http
 sudo ufw allow https
-sudo ufw enable
+sudo ufw --force enable
 
-#Устанавливаем и настраиваем сервер
-sudo apt install nginx
+# Установка и настройка NGINX
+sudo apt install nginx -y
 sudo systemctl enable nginx
-echo server {
+
+# Конфигурация NGINX
+sudo tee /etc/nginx/sites-available/"$APP_DOMEN".conf > /dev/null <<EOL
+server {
   server_name "$APP_DOMEN";
 
   location / {
     include proxy_params;
-    
     proxy_pass http://127.0.0.1:3000;
   }
 
   listen 80;
-} >> /etc/nginx/sites-available/"$APP_DOMEN".conf
-sudo ln -s /etc/nginx/sites-available/"$APP_DOMEN".conf /etc/nginx/sites-enabled/
-sudo nginx -s reload
+}
+EOL
 
-#Настройка ssh
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d tech24view.ru
-certbot renew --dry-run 
+# Активация конфигурации NGINX
+sudo ln -s /etc/nginx/sites-available/"$APP_DOMEN".conf /etc/nginx/sites-enabled/
+sudo systemctl reload nginx
+
+# Настройка SSL с помощью Certbot
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d "$APP_DOMEN" --non-interactive --agree-tos --email "$GIT_EMAIL"
+sudo certbot renew --dry-run
