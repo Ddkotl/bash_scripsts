@@ -2,8 +2,8 @@
 
 #git clone https://github.com/Ddkotl/bash_scripsts.git
 #cd bash_scripsts
-#chmod +x settings_for_new_dev_server.sh.sh
-#./settings_for_new_dev_server.sh.sh
+#chmod +x settings_for_new_prod_server.sh
+#./settings_for_new_prod_server.sh
 
 # Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
 KEY_PATH="${HOME}/.ssh/id_rsa"
