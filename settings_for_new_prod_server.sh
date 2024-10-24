@@ -51,11 +51,11 @@ git clone "$GIT_CLON_DIR"
 cd "$GIT_DIR_NAME"
 cp .env.example .env
 bun i
-npx prisma migrate deploy
-bun run build
 
 # Запуск фоновых процессов
 docker compose up -d
+npx prisma migrate deploy
+bun run build
 npx pm2 start npm --name "$GIT_DIR_NAME" -- bun run start
 npx pm2 startup
 
