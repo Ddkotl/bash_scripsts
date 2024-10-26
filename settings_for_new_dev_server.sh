@@ -5,7 +5,7 @@
 #chmod +x settings_for_new_dev_server.sh
 #./settings_for_new_dev_server.sh
 
-# Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
+# Путеременные скрипта
 KEY_PATH="${HOME}/.ssh/id_rsa"
 GIT_NAME="dd"
 GIT_EMAIL="dd5892631@gmail.com"
@@ -20,14 +20,14 @@ sudo apt update && sudo apt upgrade -y
 git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
 
-# Установка NVM (Node Version Manager)
+# Установка NVM 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 
-# Применение NVM в текущем скрипте (без необходимости source ~/.bashrc)
+# Применение NVM в текущем скрипте
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Установка последней версии LTS Node.js через NVM
+# Установка последней версии LTS Node.js
 nvm install --lts
 
 # Установка глобальных пакетов через NPM
@@ -59,4 +59,5 @@ sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/ke
 sudo apt update
 sudo apt install -y code
 
+#Перезагрузка
 shutdown -r now
