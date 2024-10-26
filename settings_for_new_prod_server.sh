@@ -8,7 +8,7 @@
 #usermod -aG sudo user
 #sudo deluser user sudo
 
-# Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
+
 KEY_PATH="${HOME}/.ssh/id_rsa"
 DEPLOY_KEY_PATH="${HOME}/.ssh/deploy.id_rsa"
 APP_DOMEN=tech24view.ru
@@ -28,7 +28,7 @@ git config --global user.email "$GIT_EMAIL"
 # Установка NVM (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 
-# Применение NVM в текущем скрипте (без необходимости source ~/.bashrc)
+# Применение NVM в текущем скрипте 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -97,4 +97,7 @@ sudo systemctl reload nginx
 sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d "$APP_DOMEN" --non-interactive --agree-tos --email "$GIT_EMAIL"
 sudo certbot renew --dry-run
+
+#Перезагрузка
+shutdown -r now
 
