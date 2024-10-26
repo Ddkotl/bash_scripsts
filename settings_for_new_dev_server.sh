@@ -7,7 +7,6 @@
 
 # Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
 KEY_PATH="${HOME}/.ssh/id_rsa"
-APP_DOMEN="novell-online.ru"
 GIT_NAME="dd"
 GIT_EMAIL="dd5892631@gmail.com"
 GIT_CLON_DIR="https://github.com/Ddkotl/tech.git"
