@@ -51,3 +51,4 @@ cd "$GIT_DIR_NAME"
 cp .env.example .env
 bun i
 
+shutdown -r now
