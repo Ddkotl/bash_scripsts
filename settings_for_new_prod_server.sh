@@ -6,14 +6,29 @@
 #./settings_for_new_prod_server.sh
 
 # Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
+NEW_USER="dd"
+USER_PASSWORD="test"
 KEY_PATH="${HOME}/.ssh/id_rsa"
-DEPLOY_KEY_PATH="${HOME}/.ssh/deploy/id_rsa"
+DEPLOY_KEY_PATH="${HOME}/.ssh/deploy.id_rsa"
 APP_DOMEN="novell-online.ru"
 GIT_NAME="dd"
 GIT_EMAIL="dd5892631@gmail.com"
 GIT_CLON_DIR="https://github.com/Ddkotl/tech.git"
 GIT_DIR_NAME="tech"
 WORK_DIR="www"
+
+# Создание нового пользователя
+if id "$NEW_USER" &>/dev/null; then
+    echo "Пользователь $NEW_USER уже существует."
+else
+    echo "Создание пользователя $NEW_USER..."
+    sudo adduser --quiet --disabled-password --gecos "" $NEW_USER
+    echo "$NEW_USER:$USER_PASSWORD" | sudo chpasswd
+    sudo usermod -aG sudo $NEW_USER
+    echo "Пользователь $NEW_USER создан и добавлен в группу sudo."
+fi
+
+su - "$NEW_USER"
 
 # Обновление системы
 sudo apt update && sudo apt upgrade -y
@@ -55,7 +70,7 @@ cp .env.example .env
 bun i
 
 # Запуск фоновых процессов
-docker compose up -d
+sudo docker compose up -d
 npx prisma migrate deploy
 bun run build
 npx pm2 start npm --name "$GIT_DIR_NAME" -- bun run start
@@ -94,3 +109,6 @@ sudo systemctl reload nginx
 sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d "$APP_DOMEN" --non-interactive --agree-tos --email "$GIT_EMAIL"
 sudo certbot renew --dry-run
+
+sudo deluser "$NEW_USER" sudo
+shutdown -r now
