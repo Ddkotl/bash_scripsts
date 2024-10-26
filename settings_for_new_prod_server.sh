@@ -5,7 +5,8 @@
 #chmod +x settings_for_new_prod_server.sh
 #./settings_for_new_prod_server.sh
 #adduser user
-#usermod -aG sudo
+#usermod -aG sudo user
+#sudo deluser user sudo
 
 # Путь для сохранения SSH ключей (по умолчанию в ~/.ssh/id_rsa)
 KEY_PATH="${HOME}/.ssh/id_rsa"
