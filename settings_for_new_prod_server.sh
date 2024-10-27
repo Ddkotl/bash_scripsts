@@ -61,7 +61,7 @@ bun i
 sudo docker compose up -d
 npx prisma migrate deploy
 bun run build
-npx pm2 start npm --name "$GIT_DIR_NAME" -- bun run start
+pm2 start "bun run start"
 npx pm2 startup
 
 # Настройка Firewall (UFW)
