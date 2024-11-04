@@ -1,3 +1,4 @@
+#!/bin/bash
 git pull
 bun i
 bun prisma migrate deploy
