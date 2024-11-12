@@ -81,6 +81,7 @@ server {
   server_name $APP_DOMEN;
 
   location / {
+    clint_max_body_size 10M;
     include proxy_params;
     proxy_pass http://127.0.0.1:3000;
   }
